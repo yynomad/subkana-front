@@ -1,0 +1,315 @@
+/* 日语学习助手样式 */
+
+/* 分析弹窗 */
+#jp-learning-assistant-bubble {
+  display: none;
+  position: fixed;
+  background: rgba(33, 33, 33, 0.95);
+  color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  max-width: 700px;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+  pointer-events: auto;
+}
+
+/* 浅色主题 */
+#jp-learning-assistant-bubble[data-theme="light"] {
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 加载动画 */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#jp-learning-assistant-bubble .loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #4a90e2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+/* 原文显示 */
+.original-sentence {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.original-sentence[data-theme="light"] {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.original-sentence .label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.original-sentence .text {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* 句型分析部分 */
+.grammar-section {
+  margin-bottom: 16px;
+}
+
+.grammar-section .section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #4a90e2;
+}
+
+.grammar-item {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid currentColor;
+}
+
+.grammar-item[data-theme="light"] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.grammar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.grammar-name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.level-badge {
+  background: currentColor;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.grammar-meaning {
+  color: #888;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.grammar-structure {
+  font-size: 13px;
+  color: #666;
+}
+
+/* 单词分析部分 */
+.vocabulary-section .section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #4a90e2;
+}
+
+.token-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.token-item {
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid currentColor;
+  transition: all 0.2s ease;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+.token-item[data-theme="light"] {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.token-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .token-item:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* 词汇卡片内容样式 */
+.token-reading {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.token-meaning {
+  font-size: 12px;
+  color: #ccc;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.token-romaji {
+  font-size: 10px;
+  color: #666;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.token-surface {
+  font-weight: 600;
+  font-size: 15px;
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  margin-bottom: 4px;
+}
+
+.token-lemma {
+  font-size: 12px;
+  color: #888;
+  margin-left: 6px;
+}
+
+.token-pos {
+  font-size: 10px;
+  color: #999;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-right: 4px;
+}
+
+[data-theme="light"] .token-pos {
+  background: rgba(0, 0, 0, 0.05);
+  color: #666;
+}
+
+.token-conj {
+  font-size: 10px;
+  color: #888;
+  margin-right: 4px;
+}
+
+.token-level {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.token-details {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* 高亮样式 */
+.jp-grammar-highlight {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.jp-grammar-highlight:hover {
+  background-color: currentColor !important;
+  color: white;
+}
+
+/* 语法高亮标记 */
+#jp-learning-assistant-bubble mark {
+  background: linear-gradient(to bottom, transparent 60%, currentColor 60%);
+  padding: 0 2px;
+  border-radius: 2px;
+  cursor: help;
+}
+
+#jp-learning-assistant-bubble mark:hover {
+  background: currentColor;
+  color: white;
+}
+
+/* 原文句子样式 */
+#jp-learning-assistant-bubble .original-sentence .text {
+  font-size: 18px;
+  line-height: 1.6;
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+}
+
+/* JLPT 等级颜色 */
+.level-n5 { color: #4caf50; }
+.level-n4 { color: #2196f3; }
+.level-n3 { color: #ffeb3b; }
+.level-n2 { color: #ff9800; }
+.level-n1 { color: #f44336; }
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+  #jp-learning-assistant-bubble {
+    max-width: 90vw;
+    max-height: 70vh;
+    font-size: 13px;
+  }
+
+  .token-grid {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .token-item {
+    padding: 3px 4px;
+  }
+
+  .token-surface {
+    font-size: 11px;
+  }
+
+  .token-level {
+    font-size: 8px;
+  }
+
+  .grammar-item {
+    padding: 10px;
+  }
+}
+
+/* 滚动条样式 */
+#jp-learning-assistant-bubble::-webkit-scrollbar {
+  width: 6px;
+}
+
+#jp-learning-assistant-bubble::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+#jp-learning-assistant-bubble::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+#jp-learning-assistant-bubble::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日语学习助手设置</title>
+  <style>
+    body {
+      width: 350px;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      background: #f5f5f5;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .header h1 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .header p {
+      margin: 0;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="url"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="url"]:focus {
+      outline: none;
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      margin: 0;
+    }
+
+    .level-filters {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .level-filter {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .level-filter:hover {
+      background: #f0f8ff;
+      border-color: #4a90e2;
+    }
+
+    .level-filter.selected {
+      background: #4a90e2;
+      color: white;
+      border-color: #4a90e2;
+    }
+
+    .level-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .level-n5 { background: #4caf50; }
+    .level-n4 { background: #2196f3; }
+    .level-n3 { background: #ffeb3b; }
+    .level-n2 { background: #ff9800; }
+    .level-n1 { background: #f44336; }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #4a90e2;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #357abd;
+    }
+
+    .btn-secondary {
+      background: #f5f5f5;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+
+    .btn-secondary:hover {
+      background: #e9e9e9;
+    }
+
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .theme-selector {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .theme-option {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 13px;
+    }
+
+    .theme-option:hover {
+      background: #f0f0f0;
+    }
+
+    .theme-option.selected {
+      background: #4a90e2;
+      color: white;
+      border-color: #4a90e2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>日语学习助手</h1>
+      <p>实时分析日语视频字幕</p>
+    </div>
+
+    <form id="settings-form">
+      <div class="form-group">
+        <label for="api-url">后端 API 地址</label>
+        <input type="url" id="api-url" placeholder="http://localhost:8000" required>
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input type="checkbox" id="auto-analyze" checked>
+          <label for="auto-analyze">鼠标悬停时自动分析</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>JLPT 等级过滤</label>
+        <div class="level-filters">
+          <div class="level-filter selected" data-level="N5">
+            <span class="level-dot level-n5"></span>
+            <span>N5</span>
+          </div>
+          <div class="level-filter selected" data-level="N4">
+            <span class="level-dot level-n4"></span>
+            <span>N4</span>
+          </div>
+          <div class="level-filter selected" data-level="N3">
+            <span class="level-dot level-n3"></span>
+            <span>N3</span>
+          </div>
+          <div class="level-filter selected" data-level="N2">
+            <span class="level-dot level-n2"></span>
+            <span>N2</span>
+          </div>
+          <div class="level-filter selected" data-level="N1">
+            <span class="level-dot level-n1"></span>
+            <span>N1</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>弹窗主题</label>
+        <div class="theme-selector">
+          <div class="theme-option selected" data-theme="dark">深色</div>
+          <div class="theme-option" data-theme="light">浅色</div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="btn btn-secondary" id="test-api">测试连接</button>
+        <button type="submit" class="btn btn-primary">保存设置</button>
+      </div>
+    </form>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

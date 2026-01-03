@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日语分词测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-text {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 4px;
+            background-color: #e3f2fd;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .test-text:hover {
+            background-color: #bbdefb;
+            border-color: #2196f3;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .instructions {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>日语分词测试</h1>
+
+    <div class="instructions">
+        <h3>使用说明：</h3>
+        <p>将鼠标悬停在下方的日语文本上，即可看到分词结果。</p>
+        <button onclick="testDirectly()" style="margin: 10px; padding: 8px 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">直接测试 TinySegmenter</button>
+        <p>在控制台中使用以下命令进行调试：</p>
+        <ul>
+            <li><code>window.testTokenize('こんにちは世界')</code> - 测试分词</li>
+            <li><code>window.jpTokenizerDebug()</code> - 查看调试信息</li>
+            <li><code>window.checkTinySegmenterFiles()</code> - 检查文件状态</li>
+        </ul>
+    </div>
+
+    <div>
+        <h3>基础句子测试：</h3>
+        <span class="test-text">こんにちは世界</span>
+        <span class="test-text">私は学生です</span>
+        <span class="test-text">今日は良い天気ですね</span>
+        <span class="test-text">日本語を勉強しています</span>
+
+        <h3>句型测试：</h3>
+        <span class="test-text">行かなければなりません</span>
+        <span class="test-text">勉強しなければならない</span>
+        <span class="test-text">早く起きなければいけません</span>
+        <span class="test-text">宿題をしなくてはいけない</span>
+
+        <h3>复杂句子测试：</h3>
+        <span class="test-text">図書館で本を読みます</span>
+        <span class="test-text">東京は日本の首都です</span>
+        <span class="test-text">桜がとても綺麗です</span>
+        <span class="test-text">友達と映画を見に行きます</span>
+        <span class="test-text">美味しい食べ物が好きです</span>
+        <span class="test-text">春休みに京都を旅行します</span>
+        <span class="test-text">新しいスマートフォンを買いました</span>
+        <span class="test-text">朝早く起きてジョギングをした</span>
+    </div>
+
+    <!-- Load TinySegmenter directly for testing -->
+    <script src="tiny_segmenter.js"></script>
+    <script>
+        // Direct test function
+        function testDirectly() {
+            if (typeof TinySegmenter !== 'undefined') {
+                const segmenter = new TinySegmenter();
+                const testText = 'こんにちは世界';
+                const result = segmenter.segment(testText);
+                alert(`TinySegmenter 测试成功！\n原文: ${testText}\n分词结果: ${result.join(' | ')}`);
+                console.log('TinySegmenter result:', result);
+            } else {
+                alert('TinySegmenter 未加载成功');
+                console.error('TinySegmenter is not available');
+            }
+        }
+
+        // Auto-test on page load
+        window.addEventListener('load', function() {
+            console.log('Page loaded, checking TinySegmenter...');
+            console.log('TinySegmenter available:', typeof TinySegmenter !== 'undefined');
+            if (typeof TinySegmenter !== 'undefined') {
+                const segmenter = new TinySegmenter();
+                console.log('TinySegmenter test result:', segmenter.segment('こんにちは世界'));
+            }
+        });
+    </script>
+    <script src="content.js"></script>
+</body>
+</html>

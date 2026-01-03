@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "日语学习助手",
+  "version": "1.0",
+  "description": "实时分析日语视频字幕中的句型和单词等级",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "日语学习助手设置"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "permissions": ["storage"],
+  "host_permissions": [
+    "http://localhost:8000/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["tiny_segmenter.js"],
+      "matches": [
+        "https://www.youtube.com/*"
+      ]
+    }
+  ]
+}
