@@ -7,13 +7,15 @@
   background: rgba(33, 33, 33, 0.95);
   color: #fff;
   border-radius: 12px;
-  padding: 16px;
+  padding: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   z-index: 10000;
   font-size: 14px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-  max-width: 700px;
-  max-height: 400px;
+  width: 50vw;
+  max-width: 50vw;
+  min-width: 400px;
+  max-height: 60vh;
   overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -266,28 +268,33 @@
 .level-n1 { color: #f44336; }
 
 /* 响应式设计 */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   #jp-learning-assistant-bubble {
+    width: 90vw;
     max-width: 90vw;
+    min-width: 300px;
     max-height: 70vh;
     font-size: 13px;
+    padding: 16px;
   }
 
   .token-grid {
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 6px;
   }
 
   .token-item {
-    padding: 3px 4px;
+    padding: 8px 10px;
+    min-width: 80px;
+    max-width: 150px;
   }
 
   .token-surface {
-    font-size: 11px;
+    font-size: 14px;
   }
 
   .token-level {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .grammar-item {

@@ -205,13 +205,15 @@ class PopupRenderer {
       background: ${settings.theme === 'dark' ? 'rgba(33, 33, 33, 0.95)' : 'rgba(255, 255, 255, 0.95)'};
       color: ${settings.theme === 'dark' ? '#fff' : '#333'};
       border-radius: 12px;
-      padding: 16px;
+      padding: 20px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       z-index: 10000;
       font-size: 14px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-      max-width: 500px;
-      max-height: 400px;
+      width: 50vw;
+      max-width: 50vw;
+      min-width: 400px;
+      max-height: 60vh;
       overflow-y: auto;
       border: 1px solid ${settings.theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
       backdrop-filter: blur(10px);
@@ -245,30 +247,38 @@ class PopupRenderer {
     this.bubble.style.opacity = '0';
     
     // 临时设置位置以测量尺寸
-    this.bubble.style.left = `${x + 15}px`;
-    this.bubble.style.top = `${y - 10}px`;
+    this.bubble.style.left = `${x}px`;
+    this.bubble.style.top = `${y}px`;
     
     // 计算位置，确保不超出视窗
     const rect = this.bubble.getBoundingClientRect();
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     
-    let finalX = x + 15; // 默认显示在鼠标右侧
-    let finalY = y - 10; // 稍微上移
+    // 水平居中：弹窗中心对齐鼠标位置
+    let finalX = x - rect.width / 2;
     
-    // 如果右侧空间不足，显示在左侧
-    if (finalX + rect.width > viewportWidth) {
-      finalX = x - rect.width - 15;
-    }
+    // 垂直位置：优先显示在鼠标上方，留出间距
+    const spacing = 15; // 与鼠标的间距
+    let finalY = y - rect.height - spacing; // 默认显示在上方
     
-    // 如果下方空间不足，向上调整
-    if (finalY + rect.height > viewportHeight) {
-      finalY = viewportHeight - rect.height - 10;
+    // 如果上方空间不足，显示在下方
+    if (finalY < 10) {
+      finalY = y + spacing;
+      // 如果下方也超出，则调整到视窗内
+      if (finalY + rect.height > viewportHeight - 10) {
+        finalY = viewportHeight - rect.height - 10;
+      }
     }
     
     // 确保不超出左边界
     if (finalX < 10) {
       finalX = 10;
+    }
+    
+    // 确保不超出右边界
+    if (finalX + rect.width > viewportWidth - 10) {
+      finalX = viewportWidth - rect.width - 10;
     }
     
     // 确保不超出上边界
@@ -460,13 +470,10 @@ class PopupRenderer {
       const after = result.slice(pattern.span.end);
       
       const levelColor = JLPT_COLORS[pattern.level] || '#666';
+      const escapedMatch = match.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const escapedTitle = (pattern.name + ': ' + pattern.meaning).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
       
-      result = `${before}<mark style="
-        background: linear-gradient(to bottom, transparent 60%, ${levelColor}40 60%);
-        padding: 0 2px;
-        border-radius: 2px;
-        cursor: help;
-      " title="${pattern.name}: ${pattern.meaning}">${match}</mark>${after}`;
+      result = `${before}<mark style="background: linear-gradient(to bottom, transparent 60%, ${levelColor}40 60%); padding: 0 2px; border-radius: 2px; cursor: help;" title="${escapedTitle}">${escapedMatch}</mark>${after}`;
     }
 
     return result;
